@@ -5,7 +5,7 @@ import {
 	offset as floatingOffset,
 	arrow as floatingArrow
 } from '@floating-ui/dom';	
-import {ID} from './use-id';
+import {ID} from './use-id.js';
 
 import type {Props} from './types';
 
