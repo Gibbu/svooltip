@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.text-glow {
+		--glow: 159 79% 56%;
+		text-shadow: 0 0 15px hsl(var(--glow)/.5),0 0 5px hsl(var(--glow)/.2);
+	}
+}
+
+.token.tag,
+.token.selector {
+	@apply text-turquoise-500;
+}
+.token.comment {
+	@apply text-neutral-500;
+}
+.token.keyword,
+.token.rule {
+	@apply text-purple-400
+}
+.token.attr-name,
+.token.function {
+	@apply text-blue-400;
+}
+.token.attr-name + .token > .token.punctuation {
+	@apply text-blue-400;
+}
+.token.namespace {
+	@apply text-cyan-300;
+}
+.token.property {
+	@apply text-red-300;
+}
+.token.operator {
+	@apply text-neutral-50;
+}
+.token.string,
+.token.attr-value {
+	@apply text-orange-200;
+}

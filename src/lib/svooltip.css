@@ -1,0 +1,94 @@
+.svooltip {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: var(--svooltip-bg, #444);
+	color: var(--svooltip-text, #fff);
+	padding: var(--svooltip-padding, 4px 8px);
+	border-radius: var(--svooltip-roundness, 4px);
+	font-weight: var(--svooltip-weight, 500);
+	font-size: var(--svooltip-text-size, .875rem);
+	box-shadow: var(--svooltip-shadow, 0 2px 5px rgb(0 0 0 / .35));
+	pointer-events: none;
+	user-select: none;
+}
+.svooltip-content {
+	position: relative;
+	z-index: 1;
+}
+.svooltip-arrow {
+	position: absolute;
+	width: var(--svooltip-arrow-size, 16px);
+	height: var(--svooltip-arrow-size, 16px);
+	transform: rotate(45deg);
+	background: var(--svooltip-bg, #444);
+}
+
+.svooltip-entering {
+	animation: scaleIn var(--svooltip-animation-duration, .15s) ease forwards;
+}
+.svooltip-leaving {
+	animation: scaleOut var(--svooltip-animation-duration, .15s) ease forwards;
+}
+
+.svooltip[data-placement="top"] {
+	transform-origin: bottom center;
+}
+.svooltip[data-placement="top-start"] {
+	transform-origin: bottom left;
+}
+.svooltip[data-placement="top-end"] {
+	transform-origin: bottom right;
+}
+
+.svooltip[data-placement="right"] {
+	transform-origin: left center;
+}
+.svooltip[data-placement="right-start"] {
+	transform-origin: left top;
+}
+.svooltip[data-placement="right-end"] {
+	transform-origin: left bottom;
+}
+
+.svooltip[data-placement="bottom"] {
+	transform-origin: top center;
+}
+.svooltip[data-placement="bottom-start"] {
+	transform-origin: top left;
+}
+.svooltip[data-placement="bottom-end"] {
+	transform-origin: top right;
+}
+
+.svooltip[data-placement="left"] {
+	transform-origin: right center;
+}
+.svooltip[data-placement="left-start"] {
+	transform-origin: right top;
+}
+.svooltip[data-placement="left-end"] {
+	transform-origin: right bottom;
+}
+
+
+@keyframes scaleIn {
+	from {
+		transform: scale(.95);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+@keyframes scaleOut {
+	from {
+		transform: scale(1);
+		opacity: 1;
+	}
+	to {
+		transform: scale(.95);
+		opacity: 0;
+	}
+}
