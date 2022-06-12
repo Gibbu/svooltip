@@ -1,5 +1,5 @@
 {
-  "name": "sv-tooltip",
+  "name": "svooltip",
   "version": "0.1.0",
   "scripts": {
     "dev": "svelte-kit dev",

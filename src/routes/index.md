@@ -55,7 +55,7 @@ And that is all you need to do. Of course you can provide some optional params.
 | `offset` | `number?` | The offset of the tooltip in `px`. | `10` |
 | `delay` | `(number &#124; [number, number])?` | The delay for showing and hiding the tooltip. <br>A `number` will apply to both in and out. <br>An `array` will apply the in and out delays separately. <br>`in` being the first index and `out` being the second. | `0` |
 | `show` | `boolean?` | Always display the tooltip. | `false` |
-| `classes.container` | `string?` | The classes to be applied on the tooltip itself. | `sv-tooltip`
+| `classes.container` | `string?` | The classes to be applied on the tooltip itself. | `svooltip`
 | `classes.arrow` | `string?` | The classes to be applied on the tooltip arrow. | `svooltip-arrow` |
 | `classes.animationEnter` | `string?` | The classes to be applied when the tooltip is entering. | `svooltip-entering` |
 | `classes.animationLeave` | `string?` | The classes to be applied when the tooltip is leaving. | `svooltip-leaving` |
