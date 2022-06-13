@@ -23,7 +23,8 @@ export default (node: HTMLElement, props: Props) => {
 			arrow: 'svooltip-arrow',
 			animationEnter: 'svooltip-entering',
 			animationLeave: 'svooltip-leaving',
-		}
+		},
+		middleware = []
 	} = props;
 
 	const targetEl = typeof target === 'string' ? document.querySelector(target)! : target!;
@@ -96,7 +97,8 @@ export default (node: HTMLElement, props: Props) => {
 				floatingOffset(offset),
 				flip(),
 				shift({padding: shiftPadding}),
-				floatingArrow({element: arrow})
+				floatingArrow({element: arrow}),
+				...middleware
 			]
 		}).then(({x, y, placement, middlewareData}) => {
 			tooltip!.style.left = `${x}px`;

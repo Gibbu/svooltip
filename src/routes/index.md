@@ -43,7 +43,7 @@ This will give you a tooltip. That's it.
 	Hover me for 1 second
 </button>
 
-And that is all you need to do. Of course you can provide some optional params.
+And that's it.
 
 ## API
 | Prop | Type | Description | Default |
@@ -69,7 +69,7 @@ The default styling includes:
 .svooltip-entering {
 	animation: scaleIn .15s ease forwards;
 }
-.svooltip-entering {
+.svooltip-leaving {
 	animation: scaleOut .15s ease forwards;
 }
 @keyframes scaleIn {

@@ -1,4 +1,4 @@
-import type {Placement} from '@floating-ui/dom';
+import type {Placement, Middleware} from '@floating-ui/dom';
 
 export interface Props {
 	/**
@@ -62,5 +62,10 @@ export interface Props {
 		 * The class to be applied when the tooltip is leaving.
 		 */
 		animationLeave?: string
-	},
+	};
+	/**
+	 * Floating UI middleware.  
+	 * `flip`, `shift`, `offset`, and `arrow` are already included.
+	 */
+	middleware?: Middleware[];
 }
