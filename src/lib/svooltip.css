@@ -11,6 +11,7 @@
 	box-shadow: var(--svooltip-shadow, 0 2px 5px rgb(0 0 0 / .35));
 	pointer-events: none;
 	user-select: none;
+	z-index: var(--svooltip-index, 1);
 }
 .svooltip-content {
 	position: relative;

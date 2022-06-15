@@ -122,7 +122,7 @@ export default (node: HTMLElement, props: Props) => {
 			});
 		});
 	}
-	
+
 	const showTooltip = async() => {
 		if (!tooltip) {
 
@@ -149,10 +149,11 @@ export default (node: HTMLElement, props: Props) => {
 
 			await animate(classes.animationLeave!, classes.animationEnter!);
 
-			node.removeAttribute('aria-describedby');
-
-			tooltip.remove();
-			tooltip = null;
+			if (tooltip) {
+				node.removeAttribute('aria-describedby');
+				tooltip.remove();
+				tooltip = null;
+			}
 		}
 	}
 
