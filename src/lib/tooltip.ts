@@ -4,14 +4,15 @@ import {
 	shift,
 	offset as floatingOffset,
 	arrow as floatingArrow
-} from '@floating-ui/dom';	
-import {ID} from './use-id.js';
+} from '@floating-ui/dom';
+import { ID } from './use-id.js';
 
-import type {Props} from './types';
+import type { Props } from './types';
 
 export default (node: HTMLElement, props: Props) => {
 	const {
 		content,
+		format = 'string',
 		target = 'body',
 		placement = 'top',
 		shiftPadding = 0,
@@ -22,7 +23,7 @@ export default (node: HTMLElement, props: Props) => {
 			container: 'svooltip',
 			arrow: 'svooltip-arrow',
 			animationEnter: 'svooltip-entering',
-			animationLeave: 'svooltip-leaving',
+			animationLeave: 'svooltip-leaving'
 		},
 		middleware = []
 	} = props;
@@ -30,8 +31,8 @@ export default (node: HTMLElement, props: Props) => {
 	const targetEl = typeof target === 'string' ? document.querySelector(target)! : target!;
 	const getDelay = {
 		in: typeof delay === 'number' ? delay : delay[0],
-		out: typeof delay === 'number' ? delay : delay[1],
-	}
+		out: typeof delay === 'number' ? delay : delay[1]
+	};
 
 	let tooltip: HTMLElement | null;
 	let arrow: HTMLElement;
@@ -40,46 +41,47 @@ export default (node: HTMLElement, props: Props) => {
 
 	const globalKeys = (e: KeyboardEvent) => {
 		if (e.key === 'Escape' || e.key === 'Esc') hideTooltip();
-	}
+	};
 
-	const animate = async(add: string, remove: string): Promise<void> => {
-		return new Promise(resolve => {
+	const animate = async (add: string, remove: string): Promise<void> => {
+		return new Promise((resolve) => {
 			tooltip?.classList.add(add);
 			tooltip?.classList.remove(remove);
 
 			tooltip?.addEventListener('animationend', () => {
 				tooltip?.classList.remove(add);
 				resolve();
-			})
-		})
-	}
+			});
+		});
+	};
 
 	const wait = (time: number): Promise<void> => {
 		clearWait();
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			_delay = setTimeout(() => {
 				clearWait();
 				resolve();
-			}, time)
-		})
-	}
+			}, time);
+		});
+	};
 	const clearWait = () => {
 		clearTimeout(_delay);
 		_delay = undefined;
-	}
+	};
 
 	const constructTooltip = () => {
 		// Tooltip
-		tooltip = document.createElement('div')
+		tooltip = document.createElement('div');
 		tooltip.setAttribute('id', `svooltip-${id}`);
 		tooltip.setAttribute('role', 'tooltip');
 		tooltip.setAttribute('data-placement', placement);
 		tooltip.setAttribute('class', classes.container!);
-		
+
 		// Content
 		const contentDiv = document.createElement('span');
 		contentDiv.setAttribute('class', 'svooltip-content');
-		contentDiv.textContent = content;
+		if (format === 'string') contentDiv.textContent = content;
+		else if (format === 'html') contentDiv.innerHTML = content;
 
 		// Arrow
 		arrow = document.createElement('div');
@@ -88,7 +90,7 @@ export default (node: HTMLElement, props: Props) => {
 		// Append to tooltip
 		tooltip.append(arrow);
 		tooltip.append(contentDiv);
-	}
+	};
 
 	const positionTooltip = () => {
 		computePosition(node, tooltip!, {
@@ -96,15 +98,15 @@ export default (node: HTMLElement, props: Props) => {
 			middleware: [
 				floatingOffset(offset),
 				flip(),
-				shift({padding: shiftPadding}),
-				floatingArrow({element: arrow}),
+				shift({ padding: shiftPadding }),
+				floatingArrow({ element: arrow }),
 				...middleware
 			]
-		}).then(({x, y, placement, middlewareData}) => {
+		}).then(({ x, y, placement, middlewareData }) => {
 			tooltip!.style.left = `${x}px`;
 			tooltip!.style.top = `${y}px`;
 
-			const {x: arrowX, y: arrowY} = middlewareData.arrow!;
+			const { x: arrowX, y: arrowY } = middlewareData.arrow!;
 
 			const side = {
 				top: 'bottom',
@@ -118,30 +120,29 @@ export default (node: HTMLElement, props: Props) => {
 				top: arrowY != null ? `${arrowY}px` : '',
 				right: '',
 				bottom: '',
-				[side]: '-4px',
+				[side]: '-4px'
 			});
 		});
-	}
+	};
 
-	const showTooltip = async() => {
+	const showTooltip = async () => {
 		if (!tooltip) {
-
 			if (getDelay.in > 0) {
 				await wait(getDelay.in);
 			}
 
 			node.setAttribute('aria-describedby', `svooltip-${id}`);
-	
+
 			constructTooltip();
 			positionTooltip();
-	
+
 			targetEl.append(tooltip!);
-	
+
 			await animate(classes.animationEnter!, classes.animationLeave!);
 		}
-	}
+	};
 
-	const hideTooltip = async() => {
+	const hideTooltip = async () => {
 		if (tooltip) {
 			if (getDelay.out > 0) {
 				await wait(getDelay.out);
@@ -155,7 +156,7 @@ export default (node: HTMLElement, props: Props) => {
 				tooltip = null;
 			}
 		}
-	}
+	};
 
 	if (show) {
 		showTooltip();
@@ -172,6 +173,6 @@ export default (node: HTMLElement, props: Props) => {
 			destroy() {
 				window.removeEventListener('keydown', globalKeys);
 			}
-		}
+		};
 	}
-}
+};

@@ -1,31 +1,36 @@
-import type {Placement, Middleware} from '@floating-ui/dom';
+import type { Placement, Middleware } from '@floating-ui/dom';
 
 export interface Props {
-	/**
-	 * The text content of the tooltip.
-	 */
-	content: string,
+	/** The text content of the tooltip. */
+	content: string;
+
+	/** The content type of the tooltip. */
+	format?: 'string' | 'html';
 
 	/**
 	 * The HTML element to place the tooltip.  
+	 * 
 	 * Default = `body`
 	 */
 	target?: string | HTMLElement;
 
 	/**
 	 * The placement of the tooltip.  
+	 * 
 	 * Default = `top`
 	 */
 	placement?: Placement;
 
 	/**
 	 * Padding for the `shift` middleware.  
+	 * 
 	 * Default = `0`
 	 */
 	shiftPadding?: number;
 
 	/**
-	 * Offset of the tooltip.  
+	 * Offset of the tooltip.
+	 * 
 	 * Default = `10`
 	 */
 	offset?: number;
@@ -37,35 +42,24 @@ export interface Props {
 	 */
 	delay?: number | [number, number];
 
-	/**
-	 * Always display the tooltip.
-	 */
+	/** Always display the tooltip. */
 	show?: boolean;
 
-	/**
-	 * Classes used for the tooltip, arrow, entering/leaving classes.
-	 */
+	/** Classes used for the tooltip, arrow, entering/leaving classes. */
 	classes?: {
-		/**
-		 * The tooltip itself.
-		 */
+		/** The tooltip itself. */
 		container?: string;
-		/**
-		 * The arrow of the tooltip.
-		 */
+		/** The arrow of the tooltip. */
 		arrow?: string;
-		/**
-		 * The class to be applied when the tooltip is entering.
-		 */
+		/** The class to be applied when the tooltip is entering. */
 		animationEnter?: string;
-		/**
-		 * The class to be applied when the tooltip is leaving.
-		 */
-		animationLeave?: string
+		/** The class to be applied when the tooltip is leaving. */
+		animationLeave?: string;
 	};
 	/**
 	 * Floating UI middleware.  
-	 * `flip`, `shift`, `offset`, and `arrow` are already included.
+	 * 
+	 * `flip`, `shift`, `offset`, and `arrow` are already included. 
 	 */
 	middleware?: Middleware[];
 }

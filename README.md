@@ -1,7 +1,9 @@
 # SVooltip
+
 A basic Svelte tooltip directive. Powered by [Floating UI](https://floating-ui.com/).
 
 ## Usage
+
 ```html
 <script>
 	import { tooltip } from 'svooltip';
@@ -23,7 +25,9 @@ A basic Svelte tooltip directive. Powered by [Floating UI](https://floating-ui.c
 ```
 
 ## Docs
+
 View more information at: https://svooltip.vercel.app
 
 ## Licence
+
 See the [LICENSE](https://github.com/Gibbu/svooltip/blob/main/LICENSE) file for license rights and limitations (MIT).
