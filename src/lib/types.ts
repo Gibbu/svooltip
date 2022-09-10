@@ -1,5 +1,7 @@
 import type { Placement, Middleware } from '@floating-ui/dom';
 
+export type Timeout = ReturnType<typeof setTimeout> | undefined;
+
 export interface Props {
 	/** The text content of the tooltip. */
 	content: string;
@@ -8,42 +10,42 @@ export interface Props {
 	format?: 'string' | 'html';
 
 	/**
-	 * The HTML element to place the tooltip.  
-	 * 
+	 * The HTML element to place the tooltip.
+	 *
 	 * Default = `body`
 	 */
 	target?: string | HTMLElement;
 
 	/**
-	 * The placement of the tooltip.  
-	 * 
+	 * The placement of the tooltip.
+	 *
 	 * Default = `top`
 	 */
 	placement?: Placement;
 
 	/**
-	 * Padding for the `shift` middleware.  
-	 * 
+	 * Padding for the `shift` middleware.
+	 *
 	 * Default = `0`
 	 */
 	shiftPadding?: number;
 
 	/**
 	 * Offset of the tooltip.
-	 * 
+	 *
 	 * Default = `10`
 	 */
 	offset?: number;
 
 	/**
-	 * Delay for showing and hiding the tooltip.  
-	 * A `number` will apply on both in and out delays.  
+	 * Delay for showing and hiding the tooltip.\
+	 * A `number` will apply on both in and out delays.\
 	 * A `array` will apply on in and out delays separately.
 	 */
 	delay?: number | [number, number];
 
 	/** Always display the tooltip. */
-	show?: boolean;
+	show?: boolean | [boolean, boolean];
 
 	/** Classes used for the tooltip, arrow, entering/leaving classes. */
 	classes?: {
@@ -57,9 +59,9 @@ export interface Props {
 		animationLeave?: string;
 	};
 	/**
-	 * Floating UI middleware.  
-	 * 
-	 * `flip`, `shift`, `offset`, and `arrow` are already included. 
+	 * Floating UI middleware.
+	 *
+	 * `flip`, `shift`, `offset`, and `arrow` are already included.
 	 */
 	middleware?: Middleware[];
 }

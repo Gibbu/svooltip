@@ -5,7 +5,7 @@ import {
 	offset as floatingOffset,
 	arrow as floatingArrow
 } from '@floating-ui/dom';
-import { ID } from './use-id.js';
+import { animate, wait, ID } from './utils.js';
 
 import type { Props } from './types';
 
@@ -43,33 +43,7 @@ export default (node: HTMLElement, props: Props) => {
 		if (e.key === 'Escape' || e.key === 'Esc') hideTooltip();
 	};
 
-	const animate = async (add: string, remove: string): Promise<void> => {
-		return new Promise((resolve) => {
-			tooltip?.classList.add(add);
-			tooltip?.classList.remove(remove);
-
-			tooltip?.addEventListener('animationend', () => {
-				tooltip?.classList.remove(add);
-				resolve();
-			});
-		});
-	};
-
-	const wait = (time: number): Promise<void> => {
-		clearWait();
-		return new Promise((resolve) => {
-			_delay = setTimeout(() => {
-				clearWait();
-				resolve();
-			}, time);
-		});
-	};
-	const clearWait = () => {
-		clearTimeout(_delay);
-		_delay = undefined;
-	};
-
-	const constructTooltip = () => {
+	const constructTooltip = (): void => {
 		// Tooltip
 		tooltip = document.createElement('div');
 		tooltip.setAttribute('id', `svooltip-${id}`);
@@ -92,7 +66,7 @@ export default (node: HTMLElement, props: Props) => {
 		tooltip.append(contentDiv);
 	};
 
-	const positionTooltip = () => {
+	const positionTooltip = (): void => {
 		computePosition(node, tooltip!, {
 			placement,
 			middleware: [
@@ -125,10 +99,10 @@ export default (node: HTMLElement, props: Props) => {
 		});
 	};
 
-	const showTooltip = async () => {
+	const showTooltip = async (): Promise<void> => {
 		if (!tooltip) {
 			if (getDelay.in > 0) {
-				await wait(getDelay.in);
+				await wait(getDelay.in, _delay);
 			}
 
 			node.setAttribute('aria-describedby', `svooltip-${id}`);
@@ -138,17 +112,17 @@ export default (node: HTMLElement, props: Props) => {
 
 			targetEl.append(tooltip!);
 
-			await animate(classes.animationEnter!, classes.animationLeave!);
+			await animate(classes.animationEnter!, classes.animationLeave!, tooltip);
 		}
 	};
 
-	const hideTooltip = async () => {
+	const hideTooltip = async (): Promise<void> => {
 		if (tooltip) {
 			if (getDelay.out > 0) {
-				await wait(getDelay.out);
+				await wait(getDelay.out, _delay);
 			}
 
-			await animate(classes.animationLeave!, classes.animationEnter!);
+			await animate(classes.animationLeave!, classes.animationEnter!, tooltip);
 
 			if (tooltip) {
 				node.removeAttribute('aria-describedby');

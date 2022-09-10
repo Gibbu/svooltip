@@ -4,7 +4,7 @@ A basic Svelte tooltip directive. Powered by [Floating UI](https://floating-ui.c
 
 ## Usage
 
-```html
+```svelte
 <script>
 	import { tooltip } from 'svooltip';
 	import 'svooltip/svooltip.css'; // Include default styling

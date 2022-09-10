@@ -1,6 +1,4 @@
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
-import prism from 'prismjs';
-import 'prism-svelte';
 import slug from 'rehype-slug';
 
 const config = defineConfig({
