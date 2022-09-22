@@ -33,10 +33,10 @@ export default (node: HTMLElement, props: Props) => {
 		in: typeof delay === 'number' ? delay : delay[0],
 		out: typeof delay === 'number' ? delay : delay[1]
 	};
+	const id: string = `svooltip-${ID()}`;
 
 	let tooltip: HTMLElement | null;
 	let arrow: HTMLElement;
-	const id: number = ID();
 	let _delay: ReturnType<typeof setTimeout> | undefined;
 
 	const globalKeys = (e: KeyboardEvent) => {
@@ -44,9 +44,11 @@ export default (node: HTMLElement, props: Props) => {
 	};
 
 	const constructTooltip = (): void => {
+		if (tooltip) return;
+
 		// Tooltip
 		tooltip = document.createElement('div');
-		tooltip.setAttribute('id', `svooltip-${id}`);
+		tooltip.setAttribute('id', id);
 		tooltip.setAttribute('role', 'tooltip');
 		tooltip.setAttribute('data-placement', placement);
 		tooltip.setAttribute('class', classes.container!);
@@ -105,7 +107,7 @@ export default (node: HTMLElement, props: Props) => {
 				await wait(getDelay.in, _delay);
 			}
 
-			node.setAttribute('aria-describedby', `svooltip-${id}`);
+			node.setAttribute('aria-describedby', id);
 
 			constructTooltip();
 			positionTooltip();
