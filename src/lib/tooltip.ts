@@ -10,7 +10,9 @@ import { animate, wait, ID } from './utils.js';
 import type { Props } from './types';
 
 export default (node: HTMLElement, props: Props) => {
-	const {
+	let _props = props;
+
+	let {
 		content,
 		format = 'string',
 		target = 'body',
@@ -25,8 +27,10 @@ export default (node: HTMLElement, props: Props) => {
 			animationEnter: 'svooltip-entering',
 			animationLeave: 'svooltip-leaving'
 		},
-		middleware = []
-	} = props;
+		middleware = [],
+		onMount,
+		onDestroy
+	} = _props;
 
 	const targetEl = typeof target === 'string' ? document.querySelector(target)! : target!;
 	const getDelay = {
@@ -36,7 +40,9 @@ export default (node: HTMLElement, props: Props) => {
 	const id: string = `svooltip-${ID()}`;
 
 	let tooltip: HTMLElement | null;
+	let tooltipContent: HTMLElement | null;
 	let arrow: HTMLElement;
+	let hovering: boolean = false;
 	let _delay: ReturnType<typeof setTimeout> | undefined;
 
 	const globalKeys = (e: KeyboardEvent) => {
@@ -54,10 +60,11 @@ export default (node: HTMLElement, props: Props) => {
 		tooltip.setAttribute('class', classes.container!);
 
 		// Content
-		const contentDiv = document.createElement('span');
-		contentDiv.setAttribute('class', 'svooltip-content');
-		if (format === 'string') contentDiv.textContent = content;
-		else if (format === 'html') contentDiv.innerHTML = content;
+		tooltipContent = document.createElement('span');
+		tooltipContent.setAttribute('class', 'svooltip-content');
+
+		if (format === 'string') tooltipContent.textContent = content;
+		else if (format === 'html') tooltipContent.innerHTML = content;
 
 		// Arrow
 		arrow = document.createElement('div');
@@ -65,7 +72,7 @@ export default (node: HTMLElement, props: Props) => {
 
 		// Append to tooltip
 		tooltip.append(arrow);
-		tooltip.append(contentDiv);
+		tooltip.append(tooltipContent);
 	};
 
 	const positionTooltip = (): void => {
@@ -105,6 +112,7 @@ export default (node: HTMLElement, props: Props) => {
 		if (!tooltip) {
 			if (getDelay.in > 0) {
 				await wait(getDelay.in, _delay);
+				if (!hovering) return;
 			}
 
 			node.setAttribute('aria-describedby', id);
@@ -115,6 +123,8 @@ export default (node: HTMLElement, props: Props) => {
 			targetEl.append(tooltip!);
 
 			await animate(classes.animationEnter!, classes.animationLeave!, tooltip);
+
+			onMount?.();
 		}
 	};
 
@@ -127,6 +137,8 @@ export default (node: HTMLElement, props: Props) => {
 			await animate(classes.animationLeave!, classes.animationEnter!, tooltip);
 
 			if (tooltip) {
+				onDestroy?.();
+
 				node.removeAttribute('aria-describedby');
 				tooltip.remove();
 				tooltip = null;
@@ -138,16 +150,30 @@ export default (node: HTMLElement, props: Props) => {
 		showTooltip();
 	} else {
 		node.addEventListener('mouseenter', showTooltip);
+		node.addEventListener('mouseenter', () => (hovering = true));
 		node.addEventListener('focus', showTooltip);
 
 		node.addEventListener('mouseleave', hideTooltip);
+		node.addEventListener('mouseleave', () => (hovering = false));
 		node.addEventListener('blur', hideTooltip);
 
 		window.addEventListener('keydown', globalKeys);
 
 		return {
+			update(props: Props) {
+				content = props.content;
+				if (props.format) format = props.format!;
+
+				if (tooltip && tooltipContent) {
+					if (format === 'string') tooltipContent.textContent = content;
+					else if (format === 'html') tooltipContent.innerHTML = content;
+					positionTooltip();
+				}
+			},
 			destroy() {
 				window.removeEventListener('keydown', globalKeys);
+
+				onDestroy?.();
 			}
 		};
 	}

@@ -1,6 +1,6 @@
 {
 	"name": "svooltip",
-	"version": "0.2.2",
+	"version": "0.3.0",
 	"scripts": {
 		"dev": "vite dev --port=3000",
 		"build": "vite build",

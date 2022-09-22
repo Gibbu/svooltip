@@ -2,6 +2,11 @@
 	import { tooltip } from '$lib';
 
 	export let example: number = 0;
+
+	const info = ['John Doe', 32, 'john@doe.com'];
+
+	$: currentInfo = info[0] as any;
+	let format: 'string' | 'html' = 'string';
 </script>
 
 {#if example === 0}
@@ -25,5 +30,27 @@
 		}}
 	>
 		HTML Content
+	</button>
+{:else if example === 2}
+	<button
+		use:tooltip={{
+			content: currentInfo,
+			format,
+			onMount() {
+				setTimeout(() => {
+					format = 'html';
+					currentInfo = `
+						<h1>${info[0]}</h1>
+						<p>${info[1]}</p>
+						<small>${info[2]}</small>
+					`;
+				}, 1000);
+			},
+			onDestroy() {
+				currentInfo = info[0];
+			}
+		}}
+	>
+		User information
 	</button>
 {/if}

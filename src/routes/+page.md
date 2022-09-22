@@ -51,7 +51,10 @@ And that's it.
 | `classes.animationEnter` | `string?`                           | The classes to be applied when the tooltip is entering.                                                                                                                                                            | `svooltip-entering` |
 | `classes.animationLeave` | `string?`                           | The classes to be applied when the tooltip is leaving.                                                                                                                                                             | `svooltip-leaving`  |
 | `middleware`             | `Middleware?`                       | Any Floating UI middleware you wish to add.                                                                                                                                                                        | `[]`                |
-| `format`                 | `(string &#124; html)?`             | What type of rendering to be used.<br>Providing `html` will use the element `innerHTML` rather than `textContent`.                                                                                                 | `string`            |
+| `format`                 | `(string &#124; html)?`             | What type of rendering to be used.<br>Providing `html` will use the element `innerHTML` rather than `textContent`.<br>So be sure to sanitize user content.                                                         | `string`            |
+| `onMount`                | `() => void`                        | A function that fires when the tooltip has been mounted to the DOM.                                                                                                                                                |                     |
+| `onDestroy`              | `() => void`                        | A function that fires when the tooltip has been removed to the DOM.                                                                                                                                                |                     |
+| `onUpdate`               | `() => void`                        | A function that fires when the tooltip has been updated in any way.                                                                                                                                                |                     |
 
 ## HTML Content
 
@@ -154,3 +157,44 @@ The default styling has support for CSS variables so if you want to minor adjust
 	--svooltip-arrow-size: 6px;
 }
 ```
+
+## Hook functions
+
+If you need to trigger an action with the lifecycle of the tooltip you can do so with the `on` hook functions.
+
+```svelte
+<script>
+	const info = [
+		'John Doe',
+		32,
+		'john@doe.com'
+	];
+
+	$: currentInfo = info[0];
+	let format = 'string';
+</script>
+
+<button
+	use:tooltip={{
+		content: currentInfo,
+		format,
+		onMount() {
+			setTimeout(() => {
+				format = 'html';
+				currentInfo = `
+					<h1>${info[0]}</h1>
+					<p>${info[1]}</p>
+					<small>${info[2]}</small>
+				`;
+			}, 1000);
+		},
+		onDestroy() {
+			currentInfo = info[0];
+		}
+	}}
+>
+	User information
+</button>
+```
+
+<Example example={2} />

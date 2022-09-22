@@ -4,7 +4,7 @@ export type Timeout = ReturnType<typeof setTimeout> | undefined;
 
 export interface Props {
 	/** The text content of the tooltip. */
-	content: string;
+	content: any;
 
 	/** The content type of the tooltip. */
 	format?: 'string' | 'html';
@@ -64,4 +64,10 @@ export interface Props {
 	 * `flip`, `shift`, `offset`, and `arrow` are already included.
 	 */
 	middleware?: Middleware[];
+
+	/** Hook function that fires when the tooltip has been mounted to the DOM. */
+	onMount?: () => void;
+
+	/** Hook function that fires when the tooltip has been removed to the DOM. */
+	onDestroy?: () => void;
 }
