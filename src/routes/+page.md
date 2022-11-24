@@ -34,12 +34,12 @@ This will give you a tooltip. That's it.
 	
 	// To change defaults reassign variables like this: @use '../lib/svooltip' with ($bg: red);
 	
-	// Plain old css custom properties still have priority:
+	// Sass configuration have higher priority than css custom properties:
 	// @use '../lib/svooltip' as * with ($bg: violet) ;
 	// .svooltip {
 	//	--svooltip-bg: green;
 	// }
-	// This will make the tooltip green.
+	// This will make the tooltip violet.
 </style>
 ```
 
