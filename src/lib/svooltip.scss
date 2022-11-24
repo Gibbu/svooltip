@@ -13,34 +13,34 @@ $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 	position: absolute;
 	top: 0;
 	left: 0;
-	background: #{$bg};
-	color: #{$text};
-	padding: #{$padding};
-	border-radius: #{$roundness};
-	font-weight: #{$weight};
-	font-size: #{$text};
-	box-shadow: #{$shadow};
+	background: $bg;
+	color: $text;
+	padding: $padding;
+	border-radius: $roundness;
+	font-weight: $weight;
+	font-size: $text;
+	box-shadow: $shadow;
 	pointer-events: none;
 	user-select: none;
-	z-index: var(--svooltip-index);
+	z-index: $index;
 }
 .svooltip-content {
 	position: relative;
-	z-index: #{$index};
+	z-index: $index;
 }
 .svooltip-arrow {
 	position: absolute;
-	width: #{$arrow-size};
-	height: #{$arrow-size};
+	width: $arrow-size;
+	height: $arrow-size;
 	transform: rotate(45deg);
-	background: #{$bg};
+	background: $bg;
 }
 
 .svooltip-entering {
-	animation: scaleIn #{$animation-duration} ease forwards;
+	animation: scaleIn $animation-duration ease forwards;
 }
 .svooltip-leaving {
-	animation: scaleOut #{$animation-duration} ease forwards;
+	animation: scaleOut $animation-duration ease forwards;
 }
 
 .svooltip[data-placement='top'] {
