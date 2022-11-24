@@ -10,6 +10,17 @@ $arrow-size: 16px !default;
 $animation-duration: 0.15s !default;
 
 .svooltip {
+	--svooltip-bg: #{$bg};
+	--svooltip-text: #{$text};
+	--svooltip-padding: #{$padding};
+	--svooltip-roundness: #{$roundness};
+	--svooltip-weight: #{$weight};
+	--svooltip-text: #{$text};
+	--svooltip-shadow: #{$shadow};
+	--svooltip-index: #{$index};
+	--svooltip-arrow-size: #{$arrow-size};
+	--svooltip-animation-duration: #{$animation-duration};
+
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -20,9 +31,19 @@ $animation-duration: 0.15s !default;
 	font-weight: $weight;
 	font-size: $text-size;
 	box-shadow: $shadow;
+
+	background: var(--svooltip-bg);
+	color: var(--svooltip-text);
+	padding: var(--svooltip-padding);
+	border-radius: var(--svooltip-roundness);
+	font-weight: var(--svooltip-weight);
+	font-size: var(--svooltip-text-size);
+	box-shadow: var(--svooltip-shadow);
+
 	pointer-events: none;
 	user-select: none;
 	z-index: $index;
+	z-index: var(--svooltip-index);
 }
 .svooltip-content {
 	position: relative;
@@ -32,15 +53,20 @@ $animation-duration: 0.15s !default;
 	position: absolute;
 	width: $arrow-size;
 	height: $arrow-size;
+	width: var(--svooltip-arrow-size);
+	height: var(--svooltip-arrow-size);
 	transform: rotate(45deg);
 	background: $bg;
+	background: var(--svooltip-bg);
 }
 
 .svooltip-entering {
 	animation: scaleIn $animation-duration ease forwards;
+	animation: scaleIn var(--svooltip-animation-duration) ease forwards;
 }
 .svooltip-leaving {
 	animation: scaleOut $animation-duration ease forwards;
+	animation: scaleOut var(--svooltip-animation-duration) ease forwards;
 }
 
 .svooltip[data-placement='top'] {
@@ -103,3 +129,4 @@ $animation-duration: 0.15s !default;
 		opacity: 0;
 	}
 }
+
