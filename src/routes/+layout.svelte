@@ -2,6 +2,7 @@
 	import { tooltip } from '$lib';
 
 	import '../app.scss';
+	
 	let copied: boolean = false;
 	const copy = async () => {
 		await navigator.clipboard.writeText('npm install -D svooltip');
