@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { tooltip } from '$lib';
-	import '$lib/svooltip.css';
-
-	import '../app.scss';
 
 	let copied: boolean = false;
 	const copy = async () => {
@@ -88,3 +85,8 @@
 		</a>
 	</p>
 </footer>
+
+<style lang="scss">
+@use '$lib/svooltip.css';
+@use '../app.scss';
+</style>
