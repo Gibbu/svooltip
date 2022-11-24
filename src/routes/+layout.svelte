@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { tooltip } from '$lib';
 
+	import '../app.scss';
 	let copied: boolean = false;
 	const copy = async () => {
 		await navigator.clipboard.writeText('npm install -D svooltip');
@@ -86,7 +87,6 @@
 	</p>
 </footer>
 
-<style lang="scss">
-@use '$lib/svooltip.css';
-@use '../app.scss';
+<style lang="scss" global>
+	@use '../lib/svooltip';
 </style>
