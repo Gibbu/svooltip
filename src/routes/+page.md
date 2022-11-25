@@ -14,7 +14,6 @@ This will give you a tooltip. That's it.
 ```svelte
 <script>
 	import { tooltip } from 'svooltip';
-	import 'svooltip/svooltip.css'; // Include default styling
 </script>
 
 <button
@@ -29,6 +28,19 @@ This will give you a tooltip. That's it.
 >
 	Hover me for 1 second
 </button>
+<style lang="scss">
+	
+	@use '../lib/svooltip'; // Include default styling 
+	
+	// To change defaults reassign variables like this: @use '../lib/svooltip' with ($bg: red);
+	
+	// Sass configuration have higher priority than css custom properties:
+	// @use '../lib/svooltip' as * with ($bg: violet) ;
+	// .svooltip {
+	//	--svooltip-bg: green;
+	// }
+	// This will make the tooltip violet.
+</style>
 ```
 
 <Example />
