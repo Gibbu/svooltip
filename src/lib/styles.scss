@@ -1,9 +1,9 @@
-$bg: var( --svooltip-bg, #444) !default;
+$bg: var(--svooltip-bg, #444) !default;
 $text: var(--svooltip-text, #fff) !default;
 $padding: var(--svooltip-padding, 4px 8px) !default;
 $roundness: var(--svooltip-roundness, 4px) !default;
 $weight: var(--svooltip-weight, 500) !default;
-$text: var(--svooltip-text, 0.875rem) !default;
+$text-size: var(--svooltip-text, 0.875rem) !default;
 $shadow: var(--svooltip-shadow, 0 2px 5px rgb(0 0 0 / 0.35)) !default;
 $index: var(--svooltip-index, 1) !default;
 $arrow-size: var(--svooltip-arrow-size, 16px) !default;
@@ -18,7 +18,7 @@ $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 	padding: $padding;
 	border-radius: $roundness;
 	font-weight: $weight;
-	font-size: $text;
+	font-size: $text-size;
 	box-shadow: $shadow;
 	pointer-events: none;
 	user-select: none;
@@ -36,7 +36,7 @@ $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 		transform: rotate(45deg);
 		background: $bg;
 	}
-	
+
 	// States
 	&-entering {
 		animation: scaleIn $animation-duration ease forwards;
@@ -44,7 +44,7 @@ $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 	&-leaving {
 		animation: scaleOut $animation-duration ease forwards;
 	}
-	
+
 	// Placement
 	&[data-placement='top'] {
 		transform-origin: bottom center;
@@ -55,7 +55,7 @@ $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 	&[data-placement='top-end'] {
 		transform-origin: bottom right;
 	}
-	
+
 	&[data-placement='right'] {
 		transform-origin: left center;
 	}
@@ -65,7 +65,7 @@ $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 	&[data-placement='right-end'] {
 		transform-origin: left bottom;
 	}
-	
+
 	&[data-placement='bottom'] {
 		transform-origin: top center;
 	}
@@ -75,7 +75,7 @@ $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 	&[data-placement='bottom-end'] {
 		transform-origin: top right;
 	}
-	
+
 	&[data-placement='left'] {
 		transform-origin: right center;
 	}

@@ -163,6 +163,14 @@ article {
 	tr:not(:last-child) {
 		border-bottom: 1px solid #121212;
 	}
+	blockquote {
+		border-left: 4px solid #444;
+		margin-left: 0;
+		padding-left: 16px;
+		& > * {
+			opacity: 0.75;
+		}
+	}
 }
 
 footer {
@@ -199,21 +207,6 @@ pre[class*='language-'] {
 	-ms-hyphens: none;
 	hyphens: none;
 	font-size: 14px;
-}
-
-/* Selection */
-code[class*='language-']::-moz-selection,
-code[class*='language-'] *::-moz-selection,
-pre[class*='language-'] *::-moz-selection {
-	color: inherit;
-	text-shadow: none;
-}
-
-code[class*='language-']::selection,
-code[class*='language-'] *::selection,
-pre[class*='language-'] *::selection {
-	color: inherit;
-	text-shadow: none;
 }
 
 pre[class*='language-css'] {

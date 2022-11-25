@@ -45,12 +45,14 @@ export interface Props {
 	delay?: number | [number, number];
 
 	/** Always display the tooltip. */
-	show?: boolean | [boolean, boolean];
+	constant?: boolean | [boolean, boolean];
 
 	/** Classes used for the tooltip, arrow, entering/leaving classes. */
 	classes?: {
 		/** The tooltip itself. */
 		container?: string;
+		/** The content of the tooltip. */
+		content?: string;
 		/** The arrow of the tooltip. */
 		arrow?: string;
 		/** The class to be applied when the tooltip is entering. */

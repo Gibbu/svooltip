@@ -1,7 +1,7 @@
 import {
 	computePosition,
-	flip,
-	shift,
+	flip as floatingFlip,
+	shift as floatingShift,
 	offset as floatingOffset,
 	arrow as floatingArrow
 } from '@floating-ui/dom';
@@ -10,8 +10,6 @@ import { animate, wait, ID } from './utils.js';
 import type { Props } from './types';
 
 export default (node: HTMLElement, props: Props) => {
-	let _props = props;
-
 	let {
 		content,
 		format = 'string',
@@ -20,9 +18,10 @@ export default (node: HTMLElement, props: Props) => {
 		shiftPadding = 0,
 		offset = 10,
 		delay = 0,
-		show = false,
+		constant = false,
 		classes = {
 			container: 'svooltip',
+			content: 'svooltip-content',
 			arrow: 'svooltip-arrow',
 			animationEnter: 'svooltip-entering',
 			animationLeave: 'svooltip-leaving'
@@ -30,64 +29,69 @@ export default (node: HTMLElement, props: Props) => {
 		middleware = [],
 		onMount,
 		onDestroy
-	} = _props;
+	} = props;
 
-	const targetEl = typeof target === 'string' ? document.querySelector(target)! : target!;
-	const getDelay = {
+	const targetEl = typeof target === 'string' ? document.querySelector(target) : target;
+	const _delay = {
 		in: typeof delay === 'number' ? delay : delay[0],
 		out: typeof delay === 'number' ? delay : delay[1]
 	};
-	const id: string = `svooltip-${ID()}`;
+	const id = `svooltip-${ID()}`;
 
-	let tooltip: HTMLElement | null;
-	let tooltipContent: HTMLElement | null;
-	let arrow: HTMLElement;
+	let _content = node.title || content!;
+	node.removeAttribute('title');
+
+	let TIP: HTMLElement | null;
+	let TIPContent: HTMLElement | null;
+	let TIPArrow: HTMLElement;
+
 	let hovering: boolean = false;
-	let _delay: ReturnType<typeof setTimeout> | undefined;
+	let visible: boolean = false;
 
-	const globalKeys = (e: KeyboardEvent) => {
-		if (e.key === 'Escape' || e.key === 'Esc') hideTooltip();
+	let currentDelay: ReturnType<typeof setTimeout> | undefined;
+
+	const handleKeys = ({ key }: KeyboardEvent) => {
+		if (key === 'Escape' || key === 'Esc') hide();
 	};
 
-	const constructTooltip = (): void => {
-		if (tooltip) return;
+	const create = () => {
+		if (TIP || visible) return;
 
 		// Tooltip
-		tooltip = document.createElement('div');
-		tooltip.setAttribute('id', id);
-		tooltip.setAttribute('role', 'tooltip');
-		tooltip.setAttribute('data-placement', placement);
-		tooltip.setAttribute('class', classes.container!);
+		TIP = document.createElement('div');
+		TIP.setAttribute('id', id);
+		TIP.setAttribute('role', 'tooltip');
+		TIP.setAttribute('data-placement', placement);
+		TIP.setAttribute('class', classes.container!);
 
 		// Content
-		tooltipContent = document.createElement('span');
-		tooltipContent.setAttribute('class', 'svooltip-content');
-
-		if (format === 'string') tooltipContent.textContent = content;
-		else if (format === 'html') tooltipContent.innerHTML = content;
+		TIPContent = document.createElement('span');
+		TIPContent.setAttribute('class', classes.content!);
+		TIPContent[format === 'string' ? 'textContent' : 'innerHTML'] = _content;
 
 		// Arrow
-		arrow = document.createElement('div');
-		arrow.setAttribute('class', classes.arrow!);
+		TIPArrow = document.createElement('div');
+		TIPArrow.setAttribute('class', classes.arrow!);
 
-		// Append to tooltip
-		tooltip.append(arrow);
-		tooltip.append(tooltipContent);
+		// Append
+		TIP.append(TIPArrow);
+		TIP.append(TIPContent);
 	};
+	const position = () => {
+		if (!TIP || !TIPArrow) return;
 
-	const positionTooltip = (): void => {
-		computePosition(node, tooltip!, {
+		computePosition(node, TIP, {
 			placement,
 			middleware: [
 				floatingOffset(offset),
-				flip(),
-				shift({ padding: shiftPadding }),
-				floatingArrow({ element: arrow }),
+				floatingFlip(),
+				floatingShift({ padding: shiftPadding }),
+				floatingArrow({ element: TIPArrow }),
 				...middleware
 			]
 		}).then(({ x, y, placement, middlewareData }) => {
-			tooltip!.style.left = `${x}px`;
-			tooltip!.style.top = `${y}px`;
+			TIP!.style.left = `${x}px`;
+			TIP!.style.top = `${y}px`;
 
 			const { x: arrowX, y: arrowY } = middlewareData.arrow!;
 
@@ -98,7 +102,7 @@ export default (node: HTMLElement, props: Props) => {
 				left: 'right'
 			}[placement.split('-')[0]]!;
 
-			Object.assign(arrow.style, {
+			Object.assign(TIPArrow.style, {
 				left: arrowX != null ? `${arrowX}px` : '',
 				top: arrowY != null ? `${arrowY}px` : '',
 				right: '',
@@ -108,70 +112,74 @@ export default (node: HTMLElement, props: Props) => {
 		});
 	};
 
-	const showTooltip = async (): Promise<void> => {
-		if (!tooltip) {
-			if (getDelay.in > 0) {
-				await wait(getDelay.in, _delay);
-				if (!hovering) return;
+	const show = async () => {
+		if (!TIP) {
+			if (_delay.in > 0) {
+				await wait(_delay.in, currentDelay);
+				if (!hovering || visible || TIP) return;
 			}
 
 			node.setAttribute('aria-describedby', id);
 
-			constructTooltip();
-			positionTooltip();
+			create();
+			position();
 
-			targetEl.append(tooltip!);
+			if (!targetEl) throw new Error(`[SVooltip] Cannot find \`${targetEl}\``);
+			if (!TIP) throw new Error(`[SVooltip] Tooltip has not been created.`);
 
-			await animate(classes.animationEnter!, classes.animationLeave!, tooltip);
+			targetEl.append(TIP);
+
+			await animate(classes.animationEnter!, classes.animationLeave!, TIP);
 
 			onMount?.();
+			visible = true;
 		}
 	};
 
-	const hideTooltip = async (): Promise<void> => {
-		if (tooltip) {
-			if (getDelay.out > 0) {
-				await wait(getDelay.out, _delay);
+	const hide = async () => {
+		if (TIP || visible) {
+			if (_delay.out > 0) {
+				await wait(_delay.out, currentDelay);
 			}
 
-			await animate(classes.animationLeave!, classes.animationEnter!, tooltip);
+			await animate(classes.animationLeave!, classes.animationEnter!, TIP);
 
-			if (tooltip) {
-				onDestroy?.();
-
+			if (TIP) {
 				node.removeAttribute('aria-describedby');
-				tooltip.remove();
-				tooltip = null;
+				visible = false;
+				TIP.remove();
+				TIP = null;
+
+				onDestroy?.();
 			}
 		}
 	};
 
-	if (show) {
-		showTooltip();
+	if (constant) {
+		show();
 	} else {
-		node.addEventListener('mouseenter', showTooltip);
+		node.addEventListener('mouseenter', show);
 		node.addEventListener('mouseenter', () => (hovering = true));
-		node.addEventListener('focus', showTooltip);
+		node.addEventListener('focus', show);
 
-		node.addEventListener('mouseleave', hideTooltip);
+		node.addEventListener('mouseleave', hide);
 		node.addEventListener('mouseleave', () => (hovering = false));
-		node.addEventListener('blur', hideTooltip);
+		node.addEventListener('blur', hide);
 
-		window.addEventListener('keydown', globalKeys);
+		window.addEventListener('keydown', handleKeys);
 
 		return {
 			update(props: Props) {
 				content = props.content;
-				if (props.format) format = props.format!;
+				format = props.format || 'string';
 
-				if (tooltip && tooltipContent) {
-					if (format === 'string') tooltipContent.textContent = content;
-					else if (format === 'html') tooltipContent.innerHTML = content;
-					positionTooltip();
+				if (TIP && TIPContent) {
+					TIPContent[format === 'string' ? 'textContent' : 'innerHTML'] = _content;
+					position();
 				}
 			},
 			destroy() {
-				window.removeEventListener('keydown', globalKeys);
+				window.removeEventListener('keydown', handleKeys);
 
 				onDestroy?.();
 			}

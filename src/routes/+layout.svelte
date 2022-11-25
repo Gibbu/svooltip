@@ -17,7 +17,7 @@
 	<h1
 		use:tooltip={{
 			content: "I'm a tooltip",
-			show: true,
+			constant: true,
 			placement: 'top',
 			target: '#layers'
 		}}
@@ -87,5 +87,5 @@
 </footer>
 
 <style lang="scss" global>
-	@use '../lib/svooltip';
+	@use '../lib/styles';
 </style>

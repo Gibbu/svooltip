@@ -14,6 +14,7 @@ This will give you a tooltip. That's it.
 ```svelte
 <script>
 	import { tooltip } from 'svooltip';
+	import 'svooltip/styles.css'; // Include default styling
 </script>
 
 <button
@@ -28,19 +29,6 @@ This will give you a tooltip. That's it.
 >
 	Hover me for 1 second
 </button>
-
-<style lang="scss">
-	@use '../lib/svooltip'; // Include default styling 
-	
-	// To change defaults reassign variables like this: @use '../lib/svooltip' with ($bg: red);
-	
-	// Sass configuration have higher priority than css custom properties:
-	// @use '../lib/svooltip' as * with ($bg: violet) ;
-	// .svooltip {
-	//	--svooltip-bg: green;
-	// }
-	// This will make the tooltip violet.
-</style>
 ```
 
 <Example />
@@ -66,6 +54,29 @@ And that's it.
 | `format`                 | `(string &#124; html)?`             | What type of rendering to be used.<br>Providing `html` will use the element `innerHTML` rather than `textContent`.<br>So be sure to sanitize user content.                                                         | `string`            |
 | `onMount`                | `() => void`                        | A function that fires when the tooltip has been mounted to the DOM.                                                                                                                                                |                     |
 | `onDestroy`              | `() => void`                        | A function that fires when the tooltip has been removed to the DOM.                                                                                                                                                |                     |
+
+## Using SASS?
+
+You can import the SASS file inside your `<script lang="scss" global>` tags.
+
+```scss
+@use 'svooltip/styles'; // Include default styling
+
+// To change defaults, reassign variables like this: @use 'svooltip/styles' with ($bg: red);
+
+// Sass configuration have higher priority than css custom properties:
+@use 'svooltip/styles' as * with (
+	$bg: violet
+);
+
+.svooltip {
+	--svooltip-bg: green;
+}
+
+// This will make the tooltip violet.
+```
+
+> **NOTE**: Make sure you have the `global` attribute set on your style tag. Otherwise Svelte will scope the styles to the component.
 
 ## HTML Content
 
