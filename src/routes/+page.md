@@ -78,6 +78,28 @@ You can import the SASS file inside your `<script lang="scss" global>` tags.
 
 > **NOTE**: Make sure you have the `global` attribute set on your style tag. Otherwise Svelte will scope the styles to the component.
 
+## Title Attribute
+
+If you wish to provide a fallback for users that don't have JavaScript enabled, you can use the `title` attribute and exclude the `content` option.
+
+```svelte
+<button
+	class="btn"
+	title="You're looking beautiful today!"
+	use:tooltip={{
+		// content: "You're looking beautiful today!",
+		placement: 'top-start',
+		delay: [1000, 0],
+		offset: 15,
+		target: '#layers'
+	}}
+>
+	Hover me for 1 second
+</button>
+```
+
+If users have JavaScript enabled, the `title` attribute will be removed automatically.
+
 ## HTML Content
 
 If you wish, you _can_ provide HTML inside the tooltip by setting the `format` option to `html`.
