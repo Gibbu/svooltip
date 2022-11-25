@@ -170,7 +170,7 @@ export default (node: HTMLElement, props: Props) => {
 
 		return {
 			update(props: Props) {
-				content = props.content;
+				_content = props.content;
 				format = props.format || 'string';
 
 				if (TIP && TIPContent) {

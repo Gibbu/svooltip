@@ -53,7 +53,7 @@ And that's it.
 | `middleware`             | `Middleware?`                       | Any Floating UI middleware you wish to add.                                                                                                                                                                        | `[]`                |
 | `format`                 | `(string &#124; html)?`             | What type of rendering to be used.<br>Providing `html` will use the element `innerHTML` rather than `textContent`.<br>So be sure to sanitize user content.                                                         | `string`            |
 | `onMount`                | `() => void`                        | A function that fires when the tooltip has been mounted to the DOM.                                                                                                                                                |                     |
-| `onDestroy`              | `() => void`                        | A function that fires when the tooltip has been removed to the DOM.                                                                                                                                                |                     |
+| `onDestroy`              | `() => void`                        | A function that fires when the tooltip has been removed from the DOM.                                                                                                                                              |                     |
 
 ## Using SASS?
 

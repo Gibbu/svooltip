@@ -37,6 +37,7 @@
 			content: currentInfo,
 			format,
 			onMount() {
+				console.log('wowzers');
 				setTimeout(() => {
 					format = 'html';
 					currentInfo = `
