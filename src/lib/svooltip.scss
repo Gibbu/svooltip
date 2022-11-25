@@ -23,64 +23,68 @@ $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 	pointer-events: none;
 	user-select: none;
 	z-index: $index;
-}
-.svooltip-content {
-	position: relative;
-	z-index: $index;
-}
-.svooltip-arrow {
-	position: absolute;
-	width: $arrow-size;
-	height: $arrow-size;
-	transform: rotate(45deg);
-	background: $bg;
-}
 
-.svooltip-entering {
-	animation: scaleIn $animation-duration ease forwards;
-}
-.svooltip-leaving {
-	animation: scaleOut $animation-duration ease forwards;
-}
-
-.svooltip[data-placement='top'] {
-	transform-origin: bottom center;
-}
-.svooltip[data-placement='top-start'] {
-	transform-origin: bottom left;
-}
-.svooltip[data-placement='top-end'] {
-	transform-origin: bottom right;
-}
-
-.svooltip[data-placement='right'] {
-	transform-origin: left center;
-}
-.svooltip[data-placement='right-start'] {
-	transform-origin: left top;
-}
-.svooltip[data-placement='right-end'] {
-	transform-origin: left bottom;
-}
-
-.svooltip[data-placement='bottom'] {
-	transform-origin: top center;
-}
-.svooltip[data-placement='bottom-start'] {
-	transform-origin: top left;
-}
-.svooltip[data-placement='bottom-end'] {
-	transform-origin: top right;
-}
-
-.svooltip[data-placement='left'] {
-	transform-origin: right center;
-}
-.svooltip[data-placement='left-start'] {
-	transform-origin: right top;
-}
-.svooltip[data-placement='left-end'] {
-	transform-origin: right bottom;
+	// Elements
+	&-content {
+		position: relative;
+		z-index: $index;
+	}
+	&-arrow {
+		position: absolute;
+		width: $arrow-size;
+		height: $arrow-size;
+		transform: rotate(45deg);
+		background: $bg;
+	}
+	
+	// States
+	&-entering {
+		animation: scaleIn $animation-duration ease forwards;
+	}
+	&-leaving {
+		animation: scaleOut $animation-duration ease forwards;
+	}
+	
+	// Placement
+	&[data-placement='top'] {
+		transform-origin: bottom center;
+	}
+	&[data-placement='top-start'] {
+		transform-origin: bottom left;
+	}
+	&[data-placement='top-end'] {
+		transform-origin: bottom right;
+	}
+	
+	&[data-placement='right'] {
+		transform-origin: left center;
+	}
+	&[data-placement='right-start'] {
+		transform-origin: left top;
+	}
+	&[data-placement='right-end'] {
+		transform-origin: left bottom;
+	}
+	
+	&[data-placement='bottom'] {
+		transform-origin: top center;
+	}
+	&[data-placement='bottom-start'] {
+		transform-origin: top left;
+	}
+	&[data-placement='bottom-end'] {
+		transform-origin: top right;
+	}
+	
+	&[data-placement='left'] {
+		transform-origin: right center;
+	}
+	&[data-placement='left-start'] {
+		transform-origin: right top;
+	}
+	&[data-placement='left-end'] {
+		transform-origin: right bottom;
+	}
 }
 
 @keyframes scaleIn {

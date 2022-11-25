@@ -2,7 +2,7 @@
 	import { tooltip } from '$lib';
 
 	import '../app.scss';
-	
+
 	let copied: boolean = false;
 	const copy = async () => {
 		await navigator.clipboard.writeText('npm install -D svooltip');
@@ -58,13 +58,11 @@
 	</div>
 </header>
 
-<article
-	class="prose prose-invert prose-code:font-body prose-p:text-neutral-400 prose-h2:text-3xl prose-tr:border-neutral-700 prose-th:border-neutral-700 prose-thead:border-neutral-700 prose-th:text-lg prose-td:text-neutral-400 max-w-5xl prose-headings:font-medium"
->
+<article>
 	<slot />
 </article>
 
-<footer class="opacity-50 mt-24 flex justify-between gap-16">
+<footer>
 	<p>
 		Made by
 		<a

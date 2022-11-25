@@ -28,8 +28,8 @@ This will give you a tooltip. That's it.
 >
 	Hover me for 1 second
 </button>
+
 <style lang="scss">
-	
 	@use '../lib/svooltip'; // Include default styling 
 	
 	// To change defaults reassign variables like this: @use '../lib/svooltip' with ($bg: red);
