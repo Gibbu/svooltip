@@ -1,5 +1,5 @@
 <script>
-	import Example from './_Example.svelte';
+	import Preview from './_Preview.svelte';
 </script>
 
 ## Why?
@@ -31,7 +31,7 @@ This will give you a tooltip. That's it.
 </button>
 ```
 
-<Example />
+<Preview component="usage" />
 
 And that's it.
 
@@ -109,15 +109,40 @@ If you wish, you _can_ provide HTML inside the tooltip by setting the `format` o
 	class="bg-neutral-800 rounded px-3 py-2 text-sm text-neutral-50"
 	use:tooltip={{
 		content: `<h1 class="text-white text-3xl line-through">Hi there</h1> <strong class="font-bold">This is using a HTML string</strong>`,
-		format: 'html',
-		placement: 'top-start'
+		format: 'html'
 	}}
 >
 	HTML Content
 </button>
 ```
 
-<Example example={1} />
+<Preview component="html" />
+
+## Tooltip component
+
+If for some reason you cannot use the Svelte `use` action you can import the `Tooltip` component.
+
+```svelte
+<script>
+	import {Tooltip} from 'svooltip';
+	import Component from 'external-lib/component';
+</script>
+
+<Tooltip content="I'm over the component">
+	<Component>Hover me</Component>
+</Tooltip>
+```
+
+<Preview component="component" />
+
+A few draw backs to this:
+
+- Since we need to wrap the tooltip on a `div` element, it may cause CSS selection issues.
+- The default block style is `inline-block` meaning it could cause positing issues.
+  - I've provided `$wrapperBlock`, `$wrapperInline` SCSS and `var(--svooltip-wrapper)`, `var(--svooltip-wrapper-inline)` CSS variables to allow you to change if need be.
+- If there are muiltiple elements inside the `Tooltip` component it will strech over the entire container. So hovering on while-space will still display the tooltip.
+
+> **NOTE**: The component is `Tooltip` while the action is `tooltip`, be wary.
 
 ## Animation
 
@@ -241,4 +266,4 @@ If you need to trigger an action with the lifecycle of the tooltip you can do so
 </button>
 ```
 
-<Example example={2} />
+<Preview component="hooks" />

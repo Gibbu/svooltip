@@ -6,30 +6,25 @@ import {
 	arrow as floatingArrow
 } from '@floating-ui/dom';
 import { animate, wait, ID } from './utils.js';
+import { DEFAULTS as D } from './defaults.js';
 
-import type { Props } from './types';
+import type { Options } from './types';
 
-export default (node: HTMLElement, props: Props) => {
+export default (node: HTMLElement, options: Options) => {
 	let {
 		content,
-		format = 'string',
-		target = 'body',
-		placement = 'top',
-		shiftPadding = 0,
-		offset = 10,
-		delay = 0,
-		constant = false,
-		classes = {
-			container: 'svooltip',
-			content: 'svooltip-content',
-			arrow: 'svooltip-arrow',
-			animationEnter: 'svooltip-entering',
-			animationLeave: 'svooltip-leaving'
-		},
-		middleware = [],
+		html = D.html,
+		target = D.target,
+		placement = D.placement,
+		shiftPadding = D.shiftPadding,
+		offset = D.offset,
+		delay = D.delay,
+		constant = D.constant,
+		classes = D.classes,
+		middleware = D.middleware,
 		onMount,
 		onDestroy
-	} = props;
+	}: Options = options;
 
 	const targetEl = typeof target === 'string' ? document.querySelector(target) : target;
 	const _delay = {
@@ -67,7 +62,7 @@ export default (node: HTMLElement, props: Props) => {
 		// Content
 		TIPContent = document.createElement('span');
 		TIPContent.setAttribute('class', classes.content!);
-		TIPContent[format === 'string' ? 'textContent' : 'innerHTML'] = _content;
+		TIPContent[html ? 'innerHTML' : 'textContent'] = _content;
 
 		// Arrow
 		TIPArrow = document.createElement('div');
@@ -169,12 +164,12 @@ export default (node: HTMLElement, props: Props) => {
 		window.addEventListener('keydown', handleKeys);
 
 		return {
-			update(props: Props) {
+			update(props: Options) {
 				_content = props.content;
-				format = props.format || 'string';
+				html = props.html || false;
 
 				if (TIP && TIPContent) {
-					TIPContent[format === 'string' ? 'textContent' : 'innerHTML'] = _content;
+					TIPContent[html ? 'innerHTML' : 'textContent'] = _content;
 					position();
 				}
 			},

@@ -8,6 +8,8 @@ $shadow: var(--svooltip-shadow, 0 2px 5px rgb(0 0 0 / 0.35)) !default;
 $index: var(--svooltip-index, 1) !default;
 $arrow-size: var(--svooltip-arrow-size, 16px) !default;
 $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
+$wrapper: var(--svooltip-wrapper, block) !default;
+$wrapperInline: var(--svooltip-wrapper-inline, inline-block) !default;
 
 .svooltip {
 	position: absolute;
@@ -35,6 +37,13 @@ $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 		height: $arrow-size;
 		transform: rotate(45deg);
 		background: $bg;
+	}
+
+	&-wrapper {
+		display: $wrapperInline;
+		&.block {
+			display: $wrapper;
+		}
 	}
 
 	// States

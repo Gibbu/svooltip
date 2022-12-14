@@ -1,10 +1,10 @@
 {
 	"name": "svooltip",
-	"version": "0.4.2",
+	"version": "0.5.0",
 	"scripts": {
 		"dev": "vite dev --port=3000",
 		"build": "vite build",
-		"build:package": "npm run package && node build.js",
+		"build:package": "npm run package && node build.js && npm publish ./package",
 		"package": "svelte-package",
 		"preview": "svelte-kit preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
