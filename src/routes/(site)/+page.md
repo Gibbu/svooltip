@@ -51,9 +51,9 @@ And that's it.
 | `classes.animationEnter` | `string?`                           | The classes to be applied when the tooltip is entering.                                                                                                                                                            | `svooltip-entering` |
 | `classes.animationLeave` | `string?`                           | The classes to be applied when the tooltip is leaving.                                                                                                                                                             | `svooltip-leaving`  |
 | `middleware`             | `Middleware?`                       | Any Floating UI middleware you wish to add.                                                                                                                                                                        | `[]`                |
-| `format`                 | `(string &#124; html)?`             | What type of rendering to be used.<br>Providing `html` will use the element `innerHTML` rather than `textContent`.<br>So be sure to sanitize user content.                                                         | `string`            |
-| `onMount`                | `() => void`                        | A function that fires when the tooltip has been mounted to the DOM.                                                                                                                                                |                     |
-| `onDestroy`              | `() => void`                        | A function that fires when the tooltip has been removed from the DOM.                                                                                                                                              |                     |
+| `html`                   | `boolean?`                          | What type of rendering to be used.<br>Setting to `true` will use the element `innerHTML` rather than `textContent`.<br>So be sure to sanitize user content.                                                        | `false`             |
+| `onMount`                | `Function`                          | A function that fires when the tooltip has been mounted to the DOM.                                                                                                                                                | `() => {}`          |
+| `onDestroy`              | `Function`                          | A function that fires when the tooltip has been removed from the DOM.                                                                                                                                              | `() => {}`          |
 
 ## Using SASS?
 
@@ -240,7 +240,7 @@ If you need to trigger an action with the lifecycle of the tooltip you can do so
 	];
 
 	$: currentInfo = info[0];
-	let format = 'string';
+	let html = false;
 </script>
 
 <button
@@ -249,7 +249,7 @@ If you need to trigger an action with the lifecycle of the tooltip you can do so
 		format,
 		onMount() {
 			setTimeout(() => {
-				format = 'html';
+				html = true;
 				currentInfo = `
 					<h1>${info[0]}</h1>
 					<p>${info[1]}</p>
