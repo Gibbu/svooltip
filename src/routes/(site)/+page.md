@@ -102,14 +102,14 @@ If users have JavaScript enabled, the `title` attribute will be removed automati
 
 ## HTML Content
 
-If you wish, you _can_ provide HTML inside the tooltip by setting the `format` option to `html`.
+If you wish, you _can_ provide HTML inside the tooltip by setting the `html` option to `true`.
 
 ```svelte
 <button
 	class="bg-neutral-800 rounded px-3 py-2 text-sm text-neutral-50"
 	use:tooltip={{
 		content: `<h1 class="text-white text-3xl line-through">Hi there</h1> <strong class="font-bold">This is using a HTML string</strong>`,
-		format: 'html'
+		html: true
 	}}
 >
 	HTML Content
