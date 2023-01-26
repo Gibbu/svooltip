@@ -3,7 +3,8 @@ import {
 	flip as floatingFlip,
 	shift as floatingShift,
 	offset as floatingOffset,
-	arrow as floatingArrow
+	arrow as floatingArrow,
+	autoUpdate
 } from '@floating-ui/dom';
 import { animate, wait, ID } from './utils.js';
 import { DEFAULTS as D } from './defaults.js';
@@ -74,7 +75,7 @@ export default (node: HTMLElement, options: Options) => {
 	};
 	const position = () => {
 		if (!TIP || !TIPArrow) return;
-
+		
 		computePosition(node, TIP, {
 			placement,
 			middleware: [
@@ -107,6 +108,8 @@ export default (node: HTMLElement, options: Options) => {
 		});
 	};
 
+	let cleanup;
+
 	const show = async () => {
 		if (!TIP) {
 			if (_delay.in > 0) {
@@ -119,6 +122,13 @@ export default (node: HTMLElement, options: Options) => {
 			create();
 			position();
 
+			if(cleanup) cleanup()
+			cleanup = autoUpdate(
+				node,
+				TIP,
+				position
+			)
+			
 			if (!targetEl) throw new Error(`[SVooltip] Cannot find \`${targetEl}\``);
 			if (!TIP) throw new Error(`[SVooltip] Tooltip has not been created.`);
 
@@ -139,6 +149,8 @@ export default (node: HTMLElement, options: Options) => {
 
 			await animate(classes.animationLeave!, classes.animationEnter!, TIP);
 
+			if(cleanup) cleanup()
+	
 			if (TIP) {
 				node.removeAttribute('aria-describedby');
 				visible = false;
