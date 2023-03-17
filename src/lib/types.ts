@@ -34,6 +34,9 @@ export interface Props {
 	 */
 	offset: number;
 
+	/** Conditionally show the tooltip. */
+	visiblity: boolean;
+
 	/**
 	 * Delay for showing and hiding the tooltip.\
 	 * A `number` will apply on both in and out delays.\
@@ -73,5 +76,5 @@ export interface Props {
 
 export interface Options extends Partial<Props> {
 	/** The text content of the tooltip. */
-	content: any;
+	content?: any;
 }

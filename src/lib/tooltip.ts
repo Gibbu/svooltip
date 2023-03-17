@@ -23,9 +23,14 @@ export default (node: HTMLElement, options: Options) => {
 		constant = D.constant,
 		classes = D.classes,
 		middleware = D.middleware,
+		visiblity = D.visiblity,
 		onMount,
 		onDestroy
 	}: Options = options;
+
+	let _visiblity: boolean = visiblity;
+
+	if (!content) return;
 
 	const targetEl = typeof target === 'string' ? document.querySelector(target) : target;
 	const _delay = {
@@ -113,7 +118,7 @@ export default (node: HTMLElement, options: Options) => {
 	};
 
 	const show = async () => {
-		if (!TIP) {
+		if (!TIP && _visiblity) {
 			if (_delay.in > 0) {
 				await wait(_delay.in, currentDelay);
 				if (!hovering || visible || TIP) return;
@@ -177,6 +182,7 @@ export default (node: HTMLElement, options: Options) => {
 			update(props: Options) {
 				_content = props.content;
 				html = props.html || false;
+				_visiblity = props.visiblity || visiblity;
 
 				if (TIP && TIPContent) {
 					TIPContent[html ? 'innerHTML' : 'textContent'] = _content;

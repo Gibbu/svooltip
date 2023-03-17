@@ -10,6 +10,7 @@ export const DEFAULTS: {
 	constant: Props['constant'];
 	classes: Props['classes'];
 	middleware: Props['middleware'];
+	visiblity: Props['visiblity'];
 } = {
 	html: false,
 	target: 'body',
@@ -18,6 +19,7 @@ export const DEFAULTS: {
 	offset: 10,
 	delay: 0,
 	constant: false,
+	visiblity: true,
 	classes: {
 		container: 'svooltip',
 		content: 'svooltip-content',

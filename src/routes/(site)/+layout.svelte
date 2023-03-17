@@ -41,7 +41,6 @@
 			target="_blank"
 			rel="noreferrer noopener"
 			use:tooltip={{
-				content: 'View GitHub',
 				offset: 15,
 				target: '#layers'
 			}}
