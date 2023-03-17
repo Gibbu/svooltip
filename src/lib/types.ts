@@ -35,7 +35,7 @@ export interface Props {
 	offset: number;
 
 	/** Conditionally show the tooltip. */
-	visiblity: boolean;
+	visibility: boolean;
 
 	/**
 	 * Delay for showing and hiding the tooltip.\
