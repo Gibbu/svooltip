@@ -50,6 +50,8 @@ export default (node: HTMLElement, options: Options) => {
 		if (key === 'Escape' || key === 'Esc') hide();
 	};
 
+	let cleanup: () => void | null;
+
 	const create = () => {
 		if (TIP || visible) return;
 
@@ -75,7 +77,7 @@ export default (node: HTMLElement, options: Options) => {
 	};
 	const position = () => {
 		if (!TIP || !TIPArrow) return;
-		
+
 		computePosition(node, TIP, {
 			placement,
 			middleware: [
@@ -98,17 +100,17 @@ export default (node: HTMLElement, options: Options) => {
 				left: 'right'
 			}[placement.split('-')[0]]!;
 
+			const arrowSize = (TIPArrow.getBoundingClientRect().width / 3).toFixed();
+
 			Object.assign(TIPArrow.style, {
 				left: arrowX != null ? `${arrowX}px` : '',
 				top: arrowY != null ? `${arrowY}px` : '',
 				right: '',
 				bottom: '',
-				[side]: '-4px'
+				[side]: `-${arrowSize}px`
 			});
 		});
 	};
-
-	let cleanup;
 
 	const show = async () => {
 		if (!TIP) {
@@ -122,13 +124,9 @@ export default (node: HTMLElement, options: Options) => {
 			create();
 			position();
 
-			if(cleanup) cleanup()
-			cleanup = autoUpdate(
-				node,
-				TIP,
-				position
-			)
-			
+			if (cleanup) cleanup();
+			cleanup = autoUpdate(node, TIP!, position);
+
 			if (!targetEl) throw new Error(`[SVooltip] Cannot find \`${targetEl}\``);
 			if (!TIP) throw new Error(`[SVooltip] Tooltip has not been created.`);
 
@@ -149,8 +147,8 @@ export default (node: HTMLElement, options: Options) => {
 
 			await animate(classes.animationLeave!, classes.animationEnter!, TIP);
 
-			if(cleanup) cleanup()
-	
+			if (cleanup) cleanup();
+
 			if (TIP) {
 				node.removeAttribute('aria-describedby');
 				visible = false;

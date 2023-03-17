@@ -6,12 +6,14 @@ $weight: var(--svooltip-weight, 500) !default;
 $text-size: var(--svooltip-text-size, 0.875rem) !default;
 $shadow: var(--svooltip-shadow, 0 2px 5px rgb(0 0 0 / 0.35)) !default;
 $index: var(--svooltip-index, 1) !default;
-$arrow-size: var(--svooltip-arrow-size, 16px) !default;
+$arrow-size: var(--svooltip-arrow-size, 12px) !default;
 $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 $wrapper: var(--svooltip-wrapper, block) !default;
 $wrapperInline: var(--svooltip-wrapper-inline, inline-block) !default;
 
 .svooltip {
+	$self: &;
+
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -35,7 +37,7 @@ $wrapperInline: var(--svooltip-wrapper-inline, inline-block) !default;
 		position: absolute;
 		width: $arrow-size;
 		height: $arrow-size;
-		transform: rotate(45deg);
+		rotate: 45deg;
 		background: $bg;
 	}
 
@@ -60,9 +62,15 @@ $wrapperInline: var(--svooltip-wrapper-inline, inline-block) !default;
 	}
 	&[data-placement='top-start'] {
 		transform-origin: bottom left;
+		#{$self}-arrow {
+			translate: calc(#{$arrow-size} - #{$arrow-size} * 2);
+		}
 	}
 	&[data-placement='top-end'] {
 		transform-origin: bottom right;
+		#{$self}-arrow {
+			translate: calc(#{$arrow-size} + #{$arrow-size} * 2);
+		}
 	}
 
 	&[data-placement='right'] {
@@ -70,9 +78,15 @@ $wrapperInline: var(--svooltip-wrapper-inline, inline-block) !default;
 	}
 	&[data-placement='right-start'] {
 		transform-origin: left top;
+		#{$self}-arrow {
+			translate: 0 calc(#{$arrow-size} - #{$arrow-size} * 2);
+		}
 	}
 	&[data-placement='right-end'] {
 		transform-origin: left bottom;
+		#{$self}-arrow {
+			translate: 0 #{$arrow-size};
+		}
 	}
 
 	&[data-placement='bottom'] {
@@ -80,9 +94,15 @@ $wrapperInline: var(--svooltip-wrapper-inline, inline-block) !default;
 	}
 	&[data-placement='bottom-start'] {
 		transform-origin: top left;
+		#{$self}-arrow {
+			translate: calc(#{$arrow-size} - #{$arrow-size} * 2);
+		}
 	}
 	&[data-placement='bottom-end'] {
 		transform-origin: top right;
+		#{$self}-arrow {
+			translate: calc(#{$arrow-size} + #{$arrow-size} * 2);
+		}
 	}
 
 	&[data-placement='left'] {
@@ -90,9 +110,15 @@ $wrapperInline: var(--svooltip-wrapper-inline, inline-block) !default;
 	}
 	&[data-placement='left-start'] {
 		transform-origin: right top;
+		#{$self}-arrow {
+			translate: 0 calc(#{$arrow-size} - #{$arrow-size} * 2);
+		}
 	}
 	&[data-placement='left-end'] {
 		transform-origin: right bottom;
+		#{$self}-arrow {
+			translate: 0 #{$arrow-size};
+		}
 	}
 }
 

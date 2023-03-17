@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { tooltip, Tooltip } from '$lib';
+	import { tooltip } from '$lib';
 
 	let copied: boolean = false;
 	const copy = async () => {
@@ -33,8 +33,8 @@
 	</p>
 	<div>
 		<button type="button" on:click={copy}>
-			<span disabled={copied}>$ npm install -D svooltip</span>
-			<small disabled={!copied}>(copied)</small>
+			<span class:disabled={copied}>$ npm install -D svooltip</span>
+			<small class:disabled={!copied}>(copied)</small>
 		</button>
 		<a
 			href="https://github.com/Gibbu/svooltip"

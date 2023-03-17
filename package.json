@@ -1,6 +1,6 @@
 {
 	"name": "svooltip",
-	"version": "0.5.1",
+	"version": "0.6.0",
 	"scripts": {
 		"dev": "vite dev --port=3000",
 		"build": "vite build",
@@ -32,21 +32,20 @@
 		"@types/prismjs": "^1.26.0",
 		"autoprefixer": "^10.4.13",
 		"mdsvex": "^0.10.6",
-		"postcss": "^8.4.19",
 		"prettier": "^2.8.0",
 		"prettier-plugin-jsdoc": "^0.3.38",
 		"prettier-plugin-svelte": "^2.8.1",
 		"prismjs": "^1.29.0",
 		"rehype-slug": "^5.1.0",
 		"sass": "^1.56.1",
-		"svelte": "^3.53.1",
+		"svelte": "^3.55.1",
 		"svelte-check": "^2.9.2",
 		"svelte-preprocess": "^4.10.7",
 		"svelte2tsx": "^0.5.20",
 		"tailwindcss": "^3.2.4",
 		"tslib": "^2.4.1",
 		"typescript": "^4.9.3",
-		"vite": "^3.2.4"
+		"vite": "^4.1.4"
 	},
 	"dependencies": {
 		"@floating-ui/dom": "^1.0.7"
