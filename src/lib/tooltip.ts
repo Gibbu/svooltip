@@ -190,6 +190,12 @@ export default (node: HTMLElement, options: Options) => {
 				}
 			},
 			destroy() {
+				if (TIP) {
+					node.removeAttribute('aria-describedby');
+					visible = false;
+					TIP.remove();
+					TIP = null;
+				}
 				window.removeEventListener('keydown', handleKeys);
 
 				onDestroy?.();
