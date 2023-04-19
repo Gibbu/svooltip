@@ -51,6 +51,8 @@ export default (node: HTMLElement, options: Options) => {
 
 	let currentDelay: ReturnType<typeof setTimeout> | undefined;
 
+	let wasDestroyed = false;
+
 	const handleKeys = ({ key }: KeyboardEvent) => {
 		if (key === 'Escape' || key === 'Esc') hide();
 	};
@@ -121,7 +123,7 @@ export default (node: HTMLElement, options: Options) => {
 		if (!TIP && _visibility) {
 			if (_delay.in > 0) {
 				await wait(_delay.in, currentDelay);
-				if (!hovering || visible || TIP) return;
+				if (wasDestroyed || !hovering || visible || TIP) return;
 			}
 
 			node.setAttribute('aria-describedby', id);
@@ -199,6 +201,7 @@ export default (node: HTMLElement, options: Options) => {
 				window.removeEventListener('keydown', handleKeys);
 
 				onDestroy?.();
+				wasDestroyed = true;
 			}
 		};
 	}
