@@ -184,7 +184,7 @@ export default (node: HTMLElement, options: Options) => {
 			update(props: Options) {
 				_content = props.content;
 				html = props.html || false;
-				_visibility = props.visibility || visibility;
+				_visibility = props.visibility ?? visibility;
 
 				if (TIP && TIPContent) {
 					TIPContent[html ? 'innerHTML' : 'textContent'] = _content;
