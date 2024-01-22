@@ -1,24 +1,36 @@
-import sass from 'sass';
-import { writeFileSync, readFileSync } from 'fs';
+import * as sass from 'sass';
+import fs from 'fs';
 import { join } from 'path';
 
-const build = async () => {
-	const result = sass.compile(join('package', 'styles.scss'), {
-		style: 'compressed',
-		sourceMap: true
-	}).css;
+const result = sass.compile(join('package', 'styles.scss'), {
+	style: 'compressed',
+	sourceMap: true
+}).css;
 
-	writeFileSync(join('package', 'styles.css'), result);
+fs.writeFileSync(join('package', 'styles.css'), result);
 
-	const data = readFileSync(join('package', 'package.json')).toString().split('\n');
-	const getLine = data.findIndex((el) => el.includes('./styles.scss'));
+console.log('[build:package] Compiled SCSS file.');
+console.log('[build:package] Generating package.json.');
 
-	let pkg = data.splice(getLine, 0, `"./styles.css": "./styles.css",`);
-	pkg = data.join('\n');
+const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 
-	writeFileSync(join('package', 'package.json'), pkg);
-
-	console.log('[build:package] Successfully built to ./package');
+const editedPkg = {
+	...pkg,
+	exports: {
+		'.': {
+			svelte: './index.js'
+		},
+		'./package.json': './package.json',
+		'./defaults': './defaults.js',
+		'./styles.css': './styles.css',
+		'./styles.scss': './styles.scss',
+		'./Tooltip.svelte': './Tooltip.svelte',
+		'./tooltip': './tooltip.js',
+		'./types': './types.js',
+		'./utils': './utils.js'
+	}
 };
 
-build();
+fs.writeFileSync(join('package', 'package.json'), JSON.stringify(editedPkg, null, 2));
+
+console.log('[build:package] Successfully built to ./package');
