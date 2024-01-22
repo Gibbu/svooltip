@@ -58,7 +58,7 @@ And that's it.
 
 ## Using SASS?
 
-You can import the SASS file inside your `<script lang="scss" global>` tags.
+You can import the SASS file inside your `<style lang="scss" global>` tags.
 
 ```scss
 @use 'svooltip/styles'; // Include default styling
