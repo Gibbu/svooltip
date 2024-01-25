@@ -1,16 +1,12 @@
 import * as sass from 'sass';
 import fs from 'fs';
-import { join } from 'path';
 
-const result = sass.compile(join('package', 'styles.scss'), {
+const result = sass.compile('./package/styles.scss', {
 	style: 'compressed',
 	sourceMap: true
 }).css;
 
-fs.writeFileSync(join('package', 'styles.css'), result);
-
-console.log('[build:package] Compiled SCSS file.');
-console.log('[build:package] Generating package.json.');
+fs.writeFileSync('./package/styles.css', result);
 
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 
@@ -18,7 +14,8 @@ const editedPkg = {
 	...pkg,
 	exports: {
 		'.': {
-			svelte: './index.js'
+			svelte: './index.js',
+			types: './index.d.ts'
 		},
 		'./package.json': './package.json',
 		'./defaults': './defaults.js',
@@ -31,6 +28,6 @@ const editedPkg = {
 	}
 };
 
-fs.writeFileSync(join('package', 'package.json'), JSON.stringify(editedPkg, null, 2));
+fs.writeFileSync('./package/package.json', JSON.stringify(editedPkg, null, 2));
 
-console.log('[build:package] Successfully built to ./package');
+console.log('Compiled SCSS. Updated package.json.');
