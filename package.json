@@ -24,6 +24,12 @@
 	"bugs": {
 		"url": "https://github.com/Gibbu/svooltip/issues"
 	},
+	"exports": {
+		".": {
+			"types": "./index.d.ts",
+			"svelte": "./index.js"
+		}
+	},
 	"devDependencies": {
 		"@sveltejs/adapter-vercel": "^5.1.0",
 		"@sveltejs/kit": "^2.4.3",
