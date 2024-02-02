@@ -30,4 +30,7 @@ const editedPkg = {
 
 fs.writeFileSync('./package/package.json', JSON.stringify(editedPkg, null, 2));
 
-console.log('Compiled SCSS. Updated package.json.');
+fs.copyFileSync('./README.md', './package/README.md');
+fs.copyFileSync('./LICENSE.md', './package/LICENSE.md');
+
+console.log('[build.js] Done.');
