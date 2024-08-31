@@ -81,8 +81,6 @@ export default (node: HTMLElement, options?: Options) => {
 			cleanUpPosition = autoUpdate(node, Tooltip!, () => {
 				if (!Tooltip || !TooltipArrow) return;
 
-				console.log('updatedededed');
-
 				computePosition(node, Tooltip!, {
 					placement: Config.placement,
 					middleware: [

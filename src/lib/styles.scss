@@ -10,6 +10,8 @@ $arrow-size: var(--svooltip-arrow-size, 12px) !default;
 $animation-duration: var(--svooltip-animation-duration, 0.15s) !default;
 $wrapper: var(--svooltip-wrapper, block) !default;
 $wrapperInline: var(--svooltip-wrapper-inline, inline-block) !default;
+$arrowZIndex: var(--svooltip-arrow-zindex, 0) !default;
+$arrowRotate: var(--svooltip-arrow-rotate, 45deg) !default;
 
 .svooltip {
 	$self: &;
@@ -37,8 +39,9 @@ $wrapperInline: var(--svooltip-wrapper-inline, inline-block) !default;
 		position: absolute;
 		width: $arrow-size;
 		height: $arrow-size;
-		rotate: 45deg;
+		rotate: $arrowRotate;
 		background: $bg;
+		z-index: $arrowZIndex;
 	}
 
 	&-wrapper {
