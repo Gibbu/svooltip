@@ -12,7 +12,7 @@
 		content: currentInfo,
 		html,
 		onMount() {
-			console.log('wowzers');
+			console.log('onMount callback from tooltip');
 			setTimeout(() => {
 				html = true;
 				currentInfo = `

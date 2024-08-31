@@ -105,6 +105,8 @@ If users have JavaScript enabled, the `title` attribute will be removed automati
 
 If you wish, you _can_ provide HTML inside the tooltip by setting the `html` option to `true`.
 
+> Be sure to sanitize any content that is user generated!
+
 ```svelte
 <button
 	class="bg-neutral-800 rounded px-3 py-2 text-sm text-neutral-50"

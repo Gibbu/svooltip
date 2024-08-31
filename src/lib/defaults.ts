@@ -1,17 +1,6 @@
 import type { Props } from './types';
 
-export const DEFAULTS: {
-	html: Props['html'];
-	target: Props['target'];
-	placement: Props['placement'];
-	shiftPadding: Props['shiftPadding'];
-	offset: Props['offset'];
-	delay: Props['delay'];
-	constant: Props['constant'];
-	classes: Props['classes'];
-	middleware: Props['middleware'];
-	visibility: Props['visibility'];
-} = {
+export const DEFAULTS: Omit<Props, 'onMount' | 'onDestroy'> = {
 	html: false,
 	target: 'body',
 	placement: 'top',
