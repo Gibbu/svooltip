@@ -10,6 +10,7 @@ import { animate, wait, ID } from './utils.js';
 import { DEFAULTS } from './defaults.js';
 
 import type { Options } from './types';
+import { tick } from 'svelte';
 
 export default (node: HTMLElement, options?: Options) => {
 	let Config = {
@@ -78,6 +79,8 @@ export default (node: HTMLElement, options?: Options) => {
 			node.setAttribute('aria-describedby', UID);
 
 			createTooltip();
+
+			await tick();
 
 			if (!targetElement) throw new Error(`[SVooltip] Cannot find \`${targetElement}\``);
 			if (!Tooltip) throw new Error(`[SVooltip] Tooltip has not been created.`);
