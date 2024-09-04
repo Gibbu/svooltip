@@ -10,7 +10,6 @@ import { animate, wait, ID } from './utils.js';
 import { DEFAULTS } from './defaults.js';
 
 import type { Options } from './types';
-import { tick } from 'svelte';
 
 export default (node: HTMLElement, options?: Options) => {
 	let Config = {
@@ -30,12 +29,7 @@ export default (node: HTMLElement, options?: Options) => {
 	let TooltipContent: HTMLElement | null = null;
 	let TooltipArrow: HTMLElement | null = null;
 
-	const targetElement = Config.target
-		? typeof Config.target === 'string'
-			? document.querySelector(Config.target)
-			: Config.target
-		: document.querySelector('body');
-	console.log(targetElement);
+	const targetElement = document.body;
 	const parseDelay = {
 		in: typeof Config.delay === 'number' ? Config.delay : Config.delay[0],
 		out: typeof Config.delay === 'number' ? Config.delay : Config.delay[1]
@@ -67,7 +61,7 @@ export default (node: HTMLElement, options?: Options) => {
 		Tooltip.append(TooltipArrow);
 		Tooltip.append(TooltipContent);
 
-		targetElement?.append(Tooltip);
+		targetElement.append(Tooltip);
 	};
 	const mountTooltip = async () => {
 		if (!Tooltip && Config.visibility) {
@@ -79,8 +73,6 @@ export default (node: HTMLElement, options?: Options) => {
 			node.setAttribute('aria-describedby', UID);
 
 			createTooltip();
-
-			await tick();
 
 			if (!targetElement) throw new Error(`[SVooltip] Cannot find \`${targetElement}\``);
 			if (!Tooltip) throw new Error(`[SVooltip] Tooltip has not been created.`);
