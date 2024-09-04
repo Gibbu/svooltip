@@ -62,7 +62,11 @@ export default (node: HTMLElement, options?: Options) => {
 		Tooltip.append(TooltipArrow);
 		Tooltip.append(TooltipContent);
 
-		targetElement?.append(Tooltip);
+		if (!targetElement) {
+			document.body.append(Tooltip);
+		} else {
+			targetElement.append(Tooltip);
+		}
 	};
 	const mountTooltip = async () => {
 		if (!Tooltip && Config.visibility) {
@@ -75,7 +79,6 @@ export default (node: HTMLElement, options?: Options) => {
 
 			createTooltip();
 
-			if (!targetElement) throw new Error(`[SVooltip] Cannot find \`${targetElement}\``);
 			if (!Tooltip) throw new Error(`[SVooltip] Tooltip has not been created.`);
 
 			cleanUpPosition = autoUpdate(node, Tooltip!, () => {
