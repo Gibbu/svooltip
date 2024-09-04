@@ -29,8 +29,11 @@ export default (node: HTMLElement, options?: Options) => {
 	let TooltipContent: HTMLElement | null = null;
 	let TooltipArrow: HTMLElement | null = null;
 
-	const targetElement =
-		typeof Config.target === 'string' ? document.querySelector(Config.target) : Config.target;
+	const targetElement = Config.target
+		? typeof Config.target === 'string'
+			? document.querySelector(Config.target)
+			: Config.target
+		: document.querySelector('body');
 	const parseDelay = {
 		in: typeof Config.delay === 'number' ? Config.delay : Config.delay[0],
 		out: typeof Config.delay === 'number' ? Config.delay : Config.delay[1]
