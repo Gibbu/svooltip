@@ -34,6 +34,7 @@ export default (node: HTMLElement, options?: Options) => {
 			? document.querySelector(Config.target)
 			: Config.target
 		: document.querySelector('body');
+	console.log(targetElement);
 	const parseDelay = {
 		in: typeof Config.delay === 'number' ? Config.delay : Config.delay[0],
 		out: typeof Config.delay === 'number' ? Config.delay : Config.delay[1]
