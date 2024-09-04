@@ -29,7 +29,8 @@ export default (node: HTMLElement, options?: Options) => {
 	let TooltipContent: HTMLElement | null = null;
 	let TooltipArrow: HTMLElement | null = null;
 
-	const targetElement = document.body;
+	const targetElement =
+		typeof Config.target === 'string' ? document.querySelector(Config.target) : Config.target;
 	const parseDelay = {
 		in: typeof Config.delay === 'number' ? Config.delay : Config.delay[0],
 		out: typeof Config.delay === 'number' ? Config.delay : Config.delay[1]
@@ -61,7 +62,11 @@ export default (node: HTMLElement, options?: Options) => {
 		Tooltip.append(TooltipArrow);
 		Tooltip.append(TooltipContent);
 
-		targetElement.append(Tooltip);
+		if (!targetElement) {
+			document.body.append(Tooltip);
+		} else {
+			targetElement.append(Tooltip);
+		}
 	};
 	const mountTooltip = async () => {
 		if (!Tooltip && Config.visibility) {
@@ -74,7 +79,6 @@ export default (node: HTMLElement, options?: Options) => {
 
 			createTooltip();
 
-			if (!targetElement) throw new Error(`[SVooltip] Cannot find \`${targetElement}\``);
 			if (!Tooltip) throw new Error(`[SVooltip] Tooltip has not been created.`);
 
 			cleanUpPosition = autoUpdate(node, Tooltip!, () => {
