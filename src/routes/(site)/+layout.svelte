@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { tooltip } from '$lib';
 
-	let copied: boolean = false;
+	let copied = $state<boolean>(false);
 	const copy = async () => {
 		await navigator.clipboard.writeText('npm install -D svooltip');
 		copied = true;
@@ -9,6 +9,8 @@
 			copied = false;
 		}, 2000);
 	};
+
+	let { children } = $props();
 </script>
 
 <header>
@@ -32,7 +34,7 @@
 		>.
 	</p>
 	<div>
-		<button type="button" on:click={copy}>
+		<button type="button" onclick={copy}>
 			<span class:disabled={copied}>$ npm install -D svooltip</span>
 			<small class:disabled={!copied}>(copied)</small>
 		</button>
@@ -40,6 +42,7 @@
 			href="https://github.com/Gibbu/svooltip"
 			target="_blank"
 			rel="noreferrer noopener"
+			aria-label="Open GitHub Repository"
 			use:tooltip={{
 				content: 'View GitHub',
 				offset: 15,
@@ -57,7 +60,7 @@
 </header>
 
 <article>
-	<slot />
+	{@render children()}
 </article>
 
 <footer>

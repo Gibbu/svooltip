@@ -2,11 +2,9 @@
 	export let component: string;
 </script>
 
-<template>
-	<div class="preview">
-		<iframe src="/examples/{component}" frameborder="0" title="" />
-	</div>
-</template>
+<div class="preview">
+	<iframe src="/examples/{component}" frameborder="0" title=""></iframe>
+</div>
 
 <style lang="scss">
 	.preview {
