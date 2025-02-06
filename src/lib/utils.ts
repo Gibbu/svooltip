@@ -1,4 +1,3 @@
-import type { Placement } from '@floating-ui/dom';
 import type { Timeout } from './types';
 
 let id: number = 1;
